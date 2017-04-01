@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  max-width: 1170px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  width: 50%;
+  margin: auto;
+}
+
+.board-square {
+  background-color: red;
+  height: 1fr;
+}
+
+.board-square.x {
+  background: linear-gradient(45deg, transparent 0%, transparent 45%, #000 46%, #000 55%, transparent 56%, transparent 100%),
+              linear-gradient(315deg, transparent 0%, transparent 45%, #000 46%, #000 55%, transparent 56%, transparent 100%);
+  border-radius: 50%;
+}
+
+.board-square.o {
+  background: radial-gradient(circle at 50% 50%, transparent 0%, transparent 40%, #000 41%, #000 60%, transparent 61%, transparent 100%);
+}
