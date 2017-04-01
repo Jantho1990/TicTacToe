@@ -17,26 +17,34 @@ var ticTacToe = function(){
       my.grid[i] = [];
       for(var j = 0; j < cols; j++){
         my.grid[i][j] = {
-          el: els[ct++]
+          el: els[ct++],
+          content: null
         };
       }
     }
   };
 
   my.makeX = function(square){
+    square.content = 'x';
     square.el.classList.remove('o');
     square.el.classList.add('x');
   };
 
   my.makeO = function(square){
+    square.content = 'o';
     square.el.classList.remove('x');
     square.el.classList.add('o');
   };
 
   my.makeEmpty = function(square){
+    square.content = null;
     square.el.classList.remove('x');
     square.el.classList.remove('o');
   };
+
+  my.isGameOver = function(){
+
+  }
 
   var init = function(){
 
