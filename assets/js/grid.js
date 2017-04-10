@@ -1,31 +1,35 @@
-var Grid = function(config){
-  console.log(config);
+function Grid(config){
   var _rows = config.rows || 0;
   var _columns = config.columns || 0;
-  var _els = config.els || null;
+  var _container = config.container || null;
+
+  var _length = _rows * _columns;
 
   var _grid = [];
 
-  // Make sure we have the right number of elements.
-  if(els.length !== (_rows * _columns)){
-    console.log('Wrong number of elements.', els.length);
-    return false;
+  /**
+   *  Create a grid element.
+   */
+  function createGridElement(){
+    var el = document.createElement('span');
+    el.classList.add('board-square');
+    _container.appendChild(el);
+    return el;
   }
+
   // Assign elements to rows and columns.
-  var ct = 0;
   for(var i = 0; i < _rows; i++){
     _grid[i] = [];
     for(var j = 0; j < _columns; j++){
       _grid[i][j] = {
-        el: _els[ct++],
+        el: createGridElement(),
         content: null
       };
     }
   }
 
-  _grid.__proto__.rows = _rows;
-  _grid.__proto__.columns = _columns;
-  console.log(_grid);
+  _grid.rows = _rows;
+  _grid.columns = _columns;
 
 
   /**
@@ -34,7 +38,7 @@ var Grid = function(config){
   var _boundaries = function(){
     var ret = { left: [], right: [] };
     var j = 0;
-    for(var i = 0; i < els.length; i += _columns){
+    for(var i = 0; i < _length; i += _columns){
       ret.left[j] = i;
       ret.right[j++] = i + _grid.columns - 1;
     }
@@ -43,7 +47,7 @@ var Grid = function(config){
     return ret;
   }();
 
-  _grid.__proto__.boundaries = _boundaries;
+  _grid.boundaries = _boundaries;
 
   return _grid;
 

@@ -3,31 +3,38 @@
   <head>
     <meta charset="utf-8">
     <title>Grid Test 0</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
     <script src="../assets/js/grid.js" charset="utf-8"></script>
   </head>
   <body>
     <main id="app">
-      <div class="board">
-        <span class="board-square x"></span>
-        <span class="board-square o"></span>
-        <span class="board-square"></span>
-        <span class="board-square"></span>
-        <span class="board-square"></span>
-        <span class="board-square"></span>
-        <span class="board-square"></span>
-        <span class="board-square"></span>
-        <span class="board-square"></span>
-      </div>
+      <div class="board board0"></div>
+      <div class="board board1"></div>
+      <div class="board board2"></div>
     </main>
     <script type="text/javascript">
     var els = document.querySelectorAll('.board-square');
-    var config = {
+    var config0 = {
       rows: 3,
       columns: 3,
-      els: els
+      container: document.querySelector('.board0')
     };
-    console.log(config);
-    var grid = new Grid(config);
+    var config1 = {
+      rows: 4,
+      columns: 4,
+      container: document.querySelector('.board1')
+    };
+    var config2 = {
+      rows: 3,
+      columns: 5,
+      container: document.querySelector('.board2')
+    };
+    var grid0 = new Grid(config0);
+    console.log(grid0);
+    var grid1 = new Grid(config1);
+    console.log(grid1);
+    var grid2 = new Grid(config2);
+    console.log(grid2);
     </script>
   </body>
 </html>
