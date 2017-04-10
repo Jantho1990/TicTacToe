@@ -5,25 +5,6 @@ var ticTacToe = function(){
   my.gameOver = false;
   my.playerTurn = 1;
 
-  my.makeGrid = function(els, rows, cols){
-    // Make sure we have the right number of elements.
-    if(els.length !== (rows * cols)){
-      console.log('Wrong number of elements.', els.length);
-      return false;
-    }
-    // Assign elements to rows and columns.
-    var ct = 0;
-    for(var i = 0; i < rows; i++){
-      my.grid[i] = [];
-      for(var j = 0; j < cols; j++){
-        my.grid[i][j] = {
-          el: els[ct++],
-          content: null
-        };
-      }
-    }
-  };
-
   my.makeX = function(square){
     square.content = 'x';
     square.el.classList.remove('o');
