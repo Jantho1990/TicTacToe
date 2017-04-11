@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Grid Test 0</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../assets/js/game.js" charset="utf-8"></script>
+    <script src="../assets/js/grid.js" charset="utf-8"></script>
+    <script src="../assets/js/validate.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <main id="app">
+      <div class="board board0"></div>
+    </main>
+    <script type="text/javascript">
+    var els = document.querySelectorAll('.board-square');
+    var gridConfig = {
+      rows: 3,
+      columns: 3,
+      container: document.querySelector('.board0')
+    };
+    var gameConfig = {
+      lineLimit: 3,
+      grid: gridConfig
+    };
+    var game = new Game(gameConfig);
+
+    // Validation test script.
+    var match0 = [0, 1, 2];
+    </script>
+  </body>
+</html>

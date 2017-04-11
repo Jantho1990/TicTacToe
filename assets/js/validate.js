@@ -7,7 +7,7 @@ var validate = function() {
    */
   function checkBoundaryAcross(match){
     var boundaries = game.grid.boundaries;
-    for(var i = 0; i < boundaries.length; i++){
+    for(var i = 0; i < game.grid.rows; i++){
       var arr0 = 0;
       var arr1 = match.length - 1;
       if(match[arr0] >= boundaries.left[i] &&
@@ -26,7 +26,7 @@ var validate = function() {
   function checkBoundaryDown(match){
     var a0 = 0;
     var a1 = match.length - 1;
-    if(match[0] > 0 && match[a1] <= game.grid.boundaries.right.last){
+    if(match[0] >= 0 && match[a1] <= game.grid.boundaries.last){
       return true;
     }
     return false;
@@ -39,23 +39,34 @@ var validate = function() {
    */
   function checkBoundaryDiagonal(match){
     var boundaries = game.grid.boundaries;
-    for(var i = 0; i < game.grid.length; i++){
-      var row = [], found = [], a = 0;
-      for(var j = 0; j < game.lineLength; j++){
-        row[j] = i + j;
-        found[j] = false;
+    // for(var i = 0; i < game.grid.rows; i++){
+    //   var row = [], found = [], a = 0;
+    //   for(var j = 0; j < game.lineLength; j++){
+    //     row[j] = i + j;
+    //     found[j] = false;
+    //   }
+    //   if(match[a] >= row[0]
+    //   && match[a] <= row[game.grid.columns - 1]){
+    //     if(found[a] === false){
+    //       found[a] = true;
+    //     }else{
+    //       return false;
+    //     }
+    //   }
+    //   a++;
+    // }
+    var ret;
+    for(var i = 0; i < game.grid.rows; i++){
+      if(match[i] >= game.grid.boundaries.left[i]
+      && match[i] <= game.grid.boundaries.right[i]){
+        ret = true;
+      }else{
+        ret = false;
+        break;
       }
-      if(match[a] >= row[0])
-      && match[a] <= row[game.grid.columns - 1]{
-        if(found[a] === false){
-          found[a] = true;
-        }else{
-          return false;
-        }
-      }
-      a++;
     }
-    return true; // this feels weird, the other checks return false unless true
+    //return true; // this feels weird, the other checks return false unless true
+    return ret;
   }
 
   /**
@@ -64,7 +75,7 @@ var validate = function() {
    */
   function checkAcross(n){
     var arr = [n];
-    for(i = 1; 1 < game.lineLength; i++){
+    for(i = 1; i < game.lineLength; i++){
       n = n + 1;
       arr[i] = n;
     }
@@ -80,7 +91,7 @@ var validate = function() {
    */
   function checkDown(n){
     var arr = [n];
-    for(var i = 0; i < game.lineLength; i++){
+    for(var i = 1; i < game.lineLength; i++){
       n = n + game.grid.columns;
       arr[i] = n;
     }
@@ -94,9 +105,9 @@ var validate = function() {
    *  Validate diagonal left.
    *  @param n The starting number.
    */
-  function checkDiagonalLeft(n){
+  function checkDiagonalForward(n){
     var arr = [n];
-    for(var i = 0; i < game.lineLength; i++){
+    for(var i = 1; i < game.lineLength; i++){
       n = n + game.grid.columns - 1;
       arr[i] = n;
     }
@@ -110,9 +121,9 @@ var validate = function() {
    *  Validate diagonal right.
    *  @param n The starting number.
    */
-  function checkDiagonalLeft(n){
+  function checkDiagonalBackward(n){
     var arr = [n];
-    for(var i = 0; i < game.lineLength; i++){
+    for(var i = 1; i < game.lineLength; i++){
       n = n + game.grid.columns + 1;
       arr[i] = n;
     }
@@ -126,8 +137,8 @@ var validate = function() {
     across: checkAcross,
     down: checkDown,
     diagonal: {
-      left: checkDiagonalLeft,
-      right: checkDiagonalRight
+      forward: checkDiagonalForward,
+      backward: checkDiagonalBackward
     }
   };
 }();

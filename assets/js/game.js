@@ -1,9 +1,10 @@
-var game = function(config){
-  var lineLimit = config.lineLimit || 3;
-  var grid = new grid(config.grid);
+var Game = function(config){
+  var _lineLength = config.lineLength || 3;
+  var _grid = new Grid(config.grid);
 
   return {
-    lineLimit: lineLimit
+    lineLength: _lineLength,
+    grid: _grid
   }
 
-}();
+};
