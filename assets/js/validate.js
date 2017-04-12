@@ -96,11 +96,11 @@ var validate = function() {
    */
   function checkLineDown(match){
     var ret = false;
-    var r = game.grid.rows;
+    var c = game.grid.columns;
     for(var i = 1; i < match.length; i++){
       // In a down line, entry - prevEntry should
       // always be equal to # of grid rows.
-      if(match[i] - match[i - 1] === r){
+      if(match[i] - match[i - 1] === c){
         if(!ret){ret = true;}
       }else{
         ret = false;
@@ -185,7 +185,7 @@ var validate = function() {
    */
   function checkDiagonalForward(match){
     if(checkLineDiagonalForward(match)
-    && checkBoundaryDiagonalForward(match)){
+    && checkBoundaryDiagonal(match)){
       return true;
     }
     return false;
@@ -198,7 +198,7 @@ var validate = function() {
    */
   function checkDiagonalBackward(match){
     if(checkLineDiagonalBackward(match)
-    && checkBoundaryDiagonalBackward(match)){
+    && checkBoundaryDiagonal(match)){
       return true;
     }
     return false;
