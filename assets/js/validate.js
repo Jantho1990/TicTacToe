@@ -8,10 +8,9 @@ var validate = function() {
   function checkBoundaryAcross(match){
     var boundaries = game.grid.boundaries;
     for(var i = 0; i < game.grid.rows; i++){
-      var arr0 = 0;
-      var arr1 = match.length - 1;
-      if(match[arr0] >= boundaries.left[i] &&
-        match[arr1] <= boundaries.right[i]){
+      var a0 = 0;
+      var a1 = match.length - 1;
+      if(match[a0] >= boundaries.left[i] && match[a1] <= boundaries.right[i]){
         return true;
       }
     }
@@ -26,7 +25,7 @@ var validate = function() {
   function checkBoundaryDown(match){
     var a0 = 0;
     var a1 = match.length - 1;
-    if(match[0] >= 0 && match[a1] <= game.grid.boundaries.last){
+    if(match[a0] >= 0 && match[a1] <= game.grid.boundaries.last){
       return true;
     }
     return false;
@@ -57,8 +56,7 @@ var validate = function() {
     // }
     var ret;
     for(var i = 0; i < game.grid.rows; i++){
-      if(match[i] >= game.grid.boundaries.left[i]
-      && match[i] <= game.grid.boundaries.right[i]){
+      if(match[i] >= game.grid.boundaries.left[i] && match[i] <= game.grid.boundaries.right[i]){
         ret = true;
       }else{
         ret = false;
@@ -79,7 +77,7 @@ var validate = function() {
     for(var i = 1; i < match.length; i++){
       // In an across line, entry - prevEntry should
       // always be equal to 1.
-      if(match[i] - match[i - 1] === 1){
+      if(Math.abs(match[i] - match[i - 1]) === 1){
         if(!ret){ret = true;}
       }else{
         ret = false;
@@ -100,7 +98,7 @@ var validate = function() {
     for(var i = 1; i < match.length; i++){
       // In a down line, entry - prevEntry should
       // always be equal to # of grid rows.
-      if(match[i] - match[i - 1] === c){
+      if(Math.abs(match[i] - match[i - 1]) === c){
         if(!ret){ret = true;}
       }else{
         ret = false;
@@ -121,7 +119,7 @@ var validate = function() {
     for(var i = 1; i < match.length; i++){
       // In an across line, entry - prevEntry should
       // always be equal to # grid columns - 1.
-      if(match[i] - match[i - 1] === (c - 1)){
+      if(Math.abs(match[i] - match[i - 1]) === (c - 1)){
         if(!ret){ret = true;}
       }else{
         ret = false;
@@ -142,7 +140,7 @@ var validate = function() {
     for(var i = 1; i < match.length; i++){
       // In an across line, entry - prevEntry should
       // always be equal to # grid columns + 1.
-      if(match[i] - match[i - 1] === (c + 1)){
+      if(Math.abs(match[i] - match[i - 1]) === (c + 1)){
         if(!ret){ret = true;}
       }else{
         ret = false;
@@ -153,11 +151,21 @@ var validate = function() {
   }
 
   /**
+   *  Reorder elements in match so they are always in ascending numeric order.
+   *  @param match An array of grid coordinates.
+   *  @return array
+   */
+  function normalizeMatch(match){
+    return match.sort(function(a, b){return a - b});
+  }
+
+  /**
    *  Validate across.
    *  @param match An array of grid coordinates.
    *  @return boolean
    */
   function checkAcross(match){
+    match = normalizeMatch(match);
     if(checkLineAcross(match)
     && checkBoundaryAcross(match)){
       return true;
@@ -171,6 +179,7 @@ var validate = function() {
    *  @return boolean
    */
   function checkDown(match){
+    match = normalizeMatch(match);
     if(checkLineDown(match)
     && checkBoundaryDown(match)){
       return true;
@@ -184,6 +193,7 @@ var validate = function() {
    *  @return boolean
    */
   function checkDiagonalForward(match){
+    match = normalizeMatch(match);
     if(checkLineDiagonalForward(match)
     && checkBoundaryDiagonal(match)){
       return true;
@@ -197,6 +207,7 @@ var validate = function() {
    *  @return boolean
    */
   function checkDiagonalBackward(match){
+    match = normalizeMatch(match);
     if(checkLineDiagonalBackward(match)
     && checkBoundaryDiagonal(match)){
       return true;
