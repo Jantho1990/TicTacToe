@@ -70,16 +70,96 @@ var validate = function() {
   }
 
   /**
-   *  Validate across.
-   *  @param n The starting number.
+   *  Check to see if match is a line across.
+   *  @param match An array of grid coordinates.
+   *  @return boolean
    */
-  function checkAcross(n){
-    var arr = [n];
-    for(i = 1; i < game.lineLength; i++){
-      n = n + 1;
-      arr[i] = n;
+  function checkLineAcross(match){
+    var ret = false;
+    for(var i = 1; i < match.length; i++){
+      // In an across line, entry - prevEntry should
+      // always be equal to 1.
+      if(match[i] - match[i - 1] === 1){
+        if(!ret){ret = true;}
+      }else{
+        ret = false;
+        break;
+      }
     }
-    if(checkBoundaryAcross(arr)){
+    return ret;
+  }
+
+  /**
+   *  Check to see if match is a line down.
+   *  @param match An array of grid coordinates.
+   *  @return boolean
+   */
+  function checkLineDown(match){
+    var ret = false;
+    var r = game.grid.rows;
+    for(var i = 1; i < match.length; i++){
+      // In a down line, entry - prevEntry should
+      // always be equal to # of grid rows.
+      if(match[i] - match[i - 1] === r){
+        if(!ret){ret = true;}
+      }else{
+        ret = false;
+        break;
+      }
+    }
+    return ret;
+  }
+
+  /**
+   *  Check to see if match is a diagonal line forward.
+   *  @param match An array of grid coordinates.
+   *  @return boolean
+   */
+  function checkLineDiagonalForward(match){
+    var ret = false;
+    var c = game.grid.columns;
+    for(var i = 1; i < match.length; i++){
+      // In an across line, entry - prevEntry should
+      // always be equal to # grid columns - 1.
+      if(match[i] - match[i - 1] === (c - 1)){
+        if(!ret){ret = true;}
+      }else{
+        ret = false;
+        break;
+      }
+    }
+    return ret;
+  }
+
+  /**
+   *  Check to see if match is a diagonal line backward.
+   *  @param match An array of grid coordinates.
+   *  @return boolean
+   */
+  function checkLineDiagonalBackward(match){
+    var ret = false;
+    var c = game.grid.columns;
+    for(var i = 1; i < match.length; i++){
+      // In an across line, entry - prevEntry should
+      // always be equal to # grid columns + 1.
+      if(match[i] - match[i - 1] === (c + 1)){
+        if(!ret){ret = true;}
+      }else{
+        ret = false;
+        break;
+      }
+    }
+    return ret;
+  }
+
+  /**
+   *  Validate across.
+   *  @param match An array of grid coordinates.
+   *  @return boolean
+   */
+  function checkAcross(match){
+    if(checkLineAcross(match)
+    && checkBoundaryAcross(match)){
       return true;
     }
     return false;
@@ -87,15 +167,12 @@ var validate = function() {
 
   /**
    *  Validate down.
-   *  @param n The starting number.
+   *  @param match The starting number.
+   *  @return boolean
    */
-  function checkDown(n){
-    var arr = [n];
-    for(var i = 1; i < game.lineLength; i++){
-      n = n + game.grid.columns;
-      arr[i] = n;
-    }
-    if(checkBoundaryDown(arr)){
+  function checkDown(match){
+    if(checkLineDown(match)
+    && checkBoundaryDown(match)){
       return true;
     }
     return false;
@@ -103,15 +180,12 @@ var validate = function() {
 
   /**
    *  Validate diagonal left.
-   *  @param n The starting number.
+   *  @param match The starting number.
+   *  @return boolean
    */
-  function checkDiagonalForward(n){
-    var arr = [n];
-    for(var i = 1; i < game.lineLength; i++){
-      n = n + game.grid.columns - 1;
-      arr[i] = n;
-    }
-    if(checkBoundaryDiagonal(arr)){
+  function checkDiagonalForward(match){
+    if(checkLineDiagonalForward(match)
+    && checkBoundaryDiagonalForward(match)){
       return true;
     }
     return false;
@@ -119,15 +193,12 @@ var validate = function() {
 
   /**
    *  Validate diagonal right.
-   *  @param n The starting number.
+   *  @param match The starting number.
+   *  @return boolean
    */
-  function checkDiagonalBackward(n){
-    var arr = [n];
-    for(var i = 1; i < game.lineLength; i++){
-      n = n + game.grid.columns + 1;
-      arr[i] = n;
-    }
-    if(checkBoundaryDiagonal(arr)){
+  function checkDiagonalBackward(match){
+    if(checkLineDiagonalBackward(match)
+    && checkBoundaryDiagonalBackward(match)){
       return true;
     }
     return false;
